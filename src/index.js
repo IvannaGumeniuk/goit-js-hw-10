@@ -26,14 +26,11 @@ function OnInput(event) {
         return Notiflix.Notify.info("Too many matches found. Please enter a more specific name.");
       } else if (countries.length < 10 && countries.length > 1) {
         return renderListCountry(countries);
-      } else if (countries.length === 1){
+      } else {
         countryCardsMarkup(countries);
       }
     })
-    .catch(error => {
-      return Notiflix.Notify.failure('Oops, there is no country with that name');
-      clearInterface();
-    });
+    .catch(onFetchError);
   
   if (inputValue === "russia") {
     return Notiflix.Notify.warning('russian warship, fuck you!!!');
@@ -83,4 +80,9 @@ function countryCardsMarkup(countries) {
 function clearInterface() {
     refs.countryList.innerHTML = '';
     refs.countryContainer.innerHTML = '';
+}
+
+function onFetchError() {
+  Notiflix.Notify.failure('Oops, there is no country with that name');
+  clearInterface();
 }
